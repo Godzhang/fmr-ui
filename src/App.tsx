@@ -40,6 +40,7 @@ function App() {
       <Button btnType={ButtonType.Link} href="https://www.baidu.com" disabled>
         button link disabled
       </Button>
+      <p>learn react</p>
     </div>
   );
 }

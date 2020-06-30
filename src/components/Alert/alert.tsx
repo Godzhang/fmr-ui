@@ -14,7 +14,7 @@ interface BaseAlertProps {
   description?: string;
   closable?: boolean;
 }
-type AlertProps = BaseAlertProps & React.HTMLAttributes<HTMLDivElement>;
+export type AlertProps = BaseAlertProps & React.HTMLAttributes<HTMLDivElement>;
 
 const Alert: React.FC<AlertProps> = (props) => {
   const {
