@@ -207,3 +207,26 @@ $btn-border-radius-sm: $border-radius-sm !default;
 
 $btn-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
   border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !default;
+
+// Alert组件
+$alert-font-size: 1rem !default;
+$alert-font-family: $font-family-base !default;
+$alert-padding-y: 0.5rem !default;
+$alert-padding-x: 0.9rem !default;
+$alert-line-height: $line-height-base !default;
+
+$alert-color: $white !default;
+
+$alert-border-width: $border-width !default;
+$alert-border-radius: $border-radius !default;
+
+$alert-padding-closable-right: 2.5rem !default;
+$alert-close-icon-top: $alert-padding-y !default;
+$alert-close-icon-right: $alert-padding-closable-right - 1rem !default;
+
+// message
+$alert-message-size: $font-size-lg !default;
+
+// description
+$alert-description-size: $font-size-sm !default;
+$alert-description-margin-top: $spacer / 3 !default;
