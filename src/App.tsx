@@ -1,10 +1,23 @@
 import React from "react";
 import Button, { ButtonType, ButtonSize } from "./components/Button/button";
 import Alert from "./components/Alert/alert";
+import Icon from "./components/Icon/icon";
 
 function App() {
   return (
     <div className="App">
+      <h1>Icon</h1>
+      <Icon icon="coffee" theme="primary" size="5x" />
+      <Icon icon="coffee" theme="secondary" size="5x" />
+      <Icon icon="coffee" theme="success" size="5x" />
+      <Icon icon="coffee" theme="info" size="5x" />
+      <Icon icon="coffee" theme="warning" size="5x" />
+      <Icon icon="coffee" theme="danger" size="5x" />
+      <Icon icon="coffee" theme="light" size="5x" />
+      <Icon icon="coffee" theme="dark" size="5x" />
+      <br />
+      <hr />
+      <br />
       <h1>Alert</h1>
       <Alert message="alert default"></Alert>
       <Alert message="alert success" type="success"></Alert>

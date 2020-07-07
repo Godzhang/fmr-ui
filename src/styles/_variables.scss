@@ -34,6 +34,17 @@ $danger: $red !default;
 $light: $gray-100 !default;
 $dark: $gray-800 !default;
 
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+);
+
 // 字体
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
   "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
@@ -230,3 +241,5 @@ $alert-message-size: $font-size-lg !default;
 // description
 $alert-description-size: $font-size-sm !default;
 $alert-description-margin-top: $spacer / 3 !default;
+
+// Icon组件

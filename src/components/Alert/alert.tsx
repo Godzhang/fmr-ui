@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import classnames from "classnames";
+import Icon from "../Icon/icon";
 
 export enum AlertType {
   Default = "default",
@@ -41,9 +42,11 @@ const Alert: React.FC<AlertProps> = (props) => {
             <div className="alert-description">{description}</div>
           ) : null}
           {closable ? (
-            <i className="alert-close-icon" onClick={() => setDisplay(false)}>
-              *
-            </i>
+            <Icon
+              className="alert-close-icon"
+              icon="window-close"
+              onClick={() => setDisplay(false)}
+            />
           ) : null}
         </div>
       ) : null}
