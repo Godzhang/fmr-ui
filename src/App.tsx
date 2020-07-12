@@ -2,10 +2,45 @@ import React from "react";
 import Button, { ButtonType, ButtonSize } from "./components/Button/button";
 import Alert from "./components/Alert/alert";
 import Icon from "./components/Icon/icon";
+import Menu from "./components/Menu/menu";
+import MenuItem from "./components/Menu/menuItem";
+import SubMenu from "./components/Menu/subMenu";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{ padding: "20px" }}>
+      <h1>Menu</h1>
+      <Menu
+        defaultIndex="0"
+        onSelect={(index) => console.log(index)}
+        defaultOpenSubMenus={["3"]}
+      >
+        <MenuItem>item_1</MenuItem>
+        <MenuItem disabled>item_2</MenuItem>
+        <MenuItem>item_3</MenuItem>
+        <SubMenu title="submenu_1">
+          <MenuItem>dropmenu_1</MenuItem>
+          <MenuItem>dropmenu_2</MenuItem>
+        </SubMenu>
+      </Menu>
+      <br />
+      <Menu
+        defaultIndex="0"
+        onSelect={(index) => console.log(index)}
+        mode="vertical"
+        defaultOpenSubMenus={["3"]}
+      >
+        <MenuItem>item_1</MenuItem>
+        <MenuItem disabled>item_2</MenuItem>
+        <MenuItem>item_3</MenuItem>
+        <SubMenu title="submenu_1">
+          <MenuItem>dropmenu_1</MenuItem>
+          <MenuItem>dropmenu_2</MenuItem>
+        </SubMenu>
+      </Menu>
+      <br />
+      <hr />
+      <br />
       <h1>Icon</h1>
       <Icon icon="coffee" theme="primary" size="5x" />
       <Icon icon="coffee" theme="secondary" size="5x" />
