@@ -1,9 +1,9 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import Alert, { AlertType, AlertProps } from "./alert";
+import { render, fireEvent, waitFor } from "@testing-library/react";
+import Alert, { AlertProps } from "./alert";
 
 const testProps: AlertProps = {
-  type: AlertType.Success,
+  type: "success",
   message: "nice",
   description: "description",
   className: "klass",
@@ -29,7 +29,7 @@ describe("test Alert component", () => {
     expect(element.firstChild).toHaveClass("alert-message");
     expect(element.lastChild).toHaveClass("alert-description");
   });
-  it("should remove the component after click the close-icon", () => {
+  it("should remove the component after click the close-icon", async () => {
     const wrapper = render(<Alert role="alert" {...closableProps} />);
     const element = wrapper.getByRole("alert");
     const closeIcon = element.getElementsByClassName("alert-close-icon")[0];
@@ -38,6 +38,8 @@ describe("test Alert component", () => {
     expect(element.firstChild).toHaveClass("alert-message");
     expect(element.lastChild).toHaveClass("alert-close-icon");
     fireEvent.click(closeIcon);
-    expect(element).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(element).not.toBeInTheDocument();
+    });
   });
 });

@@ -33,21 +33,6 @@ const gerenateMenu = (props: MenuProps) => {
   );
 };
 
-const createStyleFile = () => {
-  const cssFile: string = `
-    .fmr-submenu {
-      display: none;
-    }
-    .fmr-submenu.menu-opened {
-      display: block;
-    }
-  `;
-  const style = document.createElement("style");
-  style.type = "text/css";
-  style.innerHTML = cssFile;
-  return style;
-};
-
 let wrapper: RenderResult,
   menuElement: HTMLElement,
   activeElement: HTMLElement,
@@ -56,7 +41,6 @@ let wrapper: RenderResult,
 describe("test Menu and Menu component", () => {
   beforeEach(() => {
     wrapper = render(gerenateMenu(testProps));
-    wrapper.container.append(createStyleFile());
     menuElement = wrapper.getByRole("menu");
     activeElement = wrapper.getByText("active");
     disabledElement = wrapper.getByText("disabled");
@@ -64,7 +48,6 @@ describe("test Menu and Menu component", () => {
   it("should render correct Menu and MenuItem based on default props", () => {
     expect(menuElement).toBeInTheDocument();
     expect(menuElement).toHaveClass("fmr-menu test");
-    // expect(menuElement.getElementsByTagName("li").length).toEqual(3);
     expect(menuElement.querySelectorAll(":scope > li").length).toEqual(4);
     expect(activeElement).toHaveClass("menu-item is-active");
     expect(disabledElement).toHaveClass("menu-item is-disabled");
@@ -88,7 +71,7 @@ describe("test Menu and Menu component", () => {
   });
   // submenu
   it("should show dropdown items when hover on SubMenu", async () => {
-    expect(wrapper.queryByText("drop_1")).not.toBeVisible();
+    expect(wrapper.queryByText("drop_1")).not.toBeInTheDocument();
     const dropdownElement = wrapper.getByText("dropmenu");
     fireEvent.mouseEnter(dropdownElement);
     await waitFor(() => {
@@ -100,30 +83,34 @@ describe("test Menu and Menu component", () => {
 
     fireEvent.mouseLeave(dropdownElement);
     await waitFor(() => {
-      expect(wrapper.queryByText("drop_1")).not.toBeVisible();
+      expect(wrapper.queryByText("drop_1")).not.toBeInTheDocument();
     });
   });
-  it("should show dropdown items when click on vertical Menu", () => {
+  it("should show dropdown items when click on vertical Menu", async () => {
     cleanup();
     const wrapper = render(gerenateMenu(testVerProps));
-    wrapper.container.append(createStyleFile());
-    expect(wrapper.queryByText("drop_1")).not.toBeVisible();
+    expect(wrapper.queryByText("drop_1")).not.toBeInTheDocument();
     const dropdownElement = wrapper.getByText("dropmenu");
     fireEvent.click(dropdownElement);
-    expect(wrapper.queryByText("drop_1")).toBeVisible();
+    await waitFor(() => {
+      expect(wrapper.queryByText("drop_1")).toBeVisible();
+    });
 
     fireEvent.click(wrapper.getByText("drop_1"));
     expect(testProps.onSelect).toHaveBeenCalledWith("3-0");
 
     fireEvent.click(dropdownElement);
-    expect(wrapper.queryByText("drop_1")).not.toBeVisible();
+    await waitFor(() => {
+      expect(wrapper.queryByText("drop_1")).not.toBeInTheDocument();
+    });
   });
-  it("should open SubMenu when mode is vertical and defaultOpenSubMenus has value", () => {
+  it("should open SubMenu when mode is vertical and defaultOpenSubMenus has value", async () => {
     cleanup();
     const wrapper = render(
       gerenateMenu({ ...testVerProps, ...{ defaultOpenSubMenus: ["3"] } })
     );
-    wrapper.container.append(createStyleFile());
-    expect(wrapper.queryByText("drop_1")).toBeVisible();
+    await waitFor(() => {
+      expect(wrapper.queryByText("drop_1")).toBeVisible();
+    });
   });
 });

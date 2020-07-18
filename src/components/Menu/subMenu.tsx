@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import classnames from "classnames";
 import Icon from "../Icon/icon";
+import Transition from "../Transition/transition";
 import { MenuContext } from "./menu";
 import { MenuItemProps } from "./menuItem";
 
@@ -19,17 +20,14 @@ const SubMenu: React.FC<SubMenuProps> = ({
   const context = useContext(MenuContext);
   const opendSubMenus = context.defaultOpenSubMenus as Array<string>;
   const isOpened =
-    context.mode === "vertical" && index && opendSubMenus.includes(index);
+    context.mode === "vertical" && !!index && opendSubMenus.includes(index);
   const [menuOpen, setMenuOpen] = useState(isOpened);
   const classes = classnames("menu-item submenu-item", className, {
-    // "is-active": context.index === index,
     "is-active": index && context.index.indexOf(index) === 0,
     "menu-opened": menuOpen,
   });
   const renderChildren = () => {
-    const subMenuClasses = classnames("fmr-submenu", {
-      // "menu-opened": menuOpen,
-    });
+    const subMenuClasses = classnames("fmr-submenu", {});
     const childrenComponent = React.Children.map(children, (child, i) => {
       const childElement = child as React.FunctionComponentElement<
         MenuItemProps
@@ -43,7 +41,11 @@ const SubMenu: React.FC<SubMenuProps> = ({
         );
       }
     });
-    return <ul className={subMenuClasses}>{childrenComponent}</ul>;
+    return (
+      <Transition in={menuOpen} timeout={300} animation="zoom-in-top">
+        <ul className={subMenuClasses}>{childrenComponent}</ul>
+      </Transition>
+    );
   };
 
   const handleClick = (e: React.MouseEvent) => {
