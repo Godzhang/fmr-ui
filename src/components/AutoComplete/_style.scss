@@ -1,0 +1,25 @@
+.fmr-autocomplete {
+  position: relative;
+  .suggestion-list {
+    position: absolute;
+    top: $suggestion-list-top;
+    left: $suggestion-list-left;
+    width: 100%;
+    padding: 0;
+    background-color: $suggestion-list-background-color;
+    box-shadow: $suggestion-list-box-shadow;
+    z-index: 10;
+    .suggestion-item {
+      list-style: none;
+      padding: 0 $suggestion-item-padding-vertial;
+      font-size: $suggestion-item-font-size;
+      line-height: $suggestion-item-line-height;
+      color: $suggestion-item-color;
+      cursor: pointer;
+      &.is-highlight {
+        // color: $suggestion-item-highlight-color;
+        background-color: $suggestion-item-highlight-background-color;
+      }
+    }
+  }
+}

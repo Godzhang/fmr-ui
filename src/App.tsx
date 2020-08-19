@@ -8,12 +8,94 @@ import SubMenu from "./components/Menu/subMenu";
 import Tabs from "./components/Tabs/tabs";
 import TabItem from "./components/Tabs/tabItem";
 import Transition from "./components/Transition/transition";
+import Input from "./components/Input/input";
+import AutoComplete, {
+  DataSourceType,
+} from "./components/AutoComplete/autoComplete";
 
 function App() {
   const [showTransition, setTransition] = useState(false);
+  // autocomplete
+  // const list = ["zhangqi", "chuquwan"];
+  // const fetchSuggestions = (keyword: string) =>
+  //   list
+  //     .filter((item) => item.includes(keyword))
+  //     .map((item) => ({ value: item }));
+  interface LakerProps {
+    value: string;
+    number: number;
+  }
+  const list = [
+    { value: "zhangqi", number: 1 },
+    { value: "chuquwan", number: 2 },
+  ];
+  const fetchSuggestions = (keyword: string) => {
+    return list.filter((item) => item.value.includes(keyword));
+
+    // return new Promise<DataSourceType[]>((resolve) => {
+    //   setTimeout(() => {
+    //     const result = list.filter((item) => item.value.includes(keyword));
+    //     resolve(result);
+    //   }, 3000);
+    // });
+
+    // return fetch("")
+    //   .then((res) => res.json())
+    //   .then((res) => ({ value: res.name, ...res }));
+  };
+  const renderOption = (item: DataSourceType) => {
+    const itemWithNumber = item as DataSourceType<LakerProps>;
+    return (
+      <h3>
+        Name: {itemWithNumber.value} - {itemWithNumber.number}
+      </h3>
+    );
+  };
+
   return (
     <div className="App" style={{ padding: "20px" }}>
-      <h1></h1>
+      <h1>AutoComplete</h1>
+      <AutoComplete
+        fetchSuggestions={fetchSuggestions}
+        onSelect={(item) => console.log(item)}
+        style={{ marginBottom: "10px" }}
+      />
+      <p>问题：如果是自定义选项，点击后应该渲染自定义选项内容</p>
+      <AutoComplete
+        fetchSuggestions={fetchSuggestions}
+        onSelect={(item) => console.log(item)}
+        renderOption={renderOption}
+      />
+      <br />
+      <hr />
+      <br />
+      <h1>Input</h1>
+      <Input style={{ marginBottom: "10px" }} placeholder="请输入姓名" />
+      <Input
+        style={{ marginBottom: "10px" }}
+        placeholder="请输入姓名"
+        disabled
+      />
+      <Input
+        style={{ marginBottom: "10px" }}
+        placeholder="请输入姓名"
+        readOnly
+      />
+      <Input
+        style={{ marginBottom: "10px" }}
+        value="zhangqi"
+        prepend="prepend"
+        append="append"
+        onChange={(e) => console.log(e.target.value)}
+      />
+      <Input
+        style={{ marginBottom: "10px" }}
+        value="zhangqi"
+        icon="coffee"
+        prepend="prepend"
+        size="lg"
+        onChange={(e) => console.log(e.target.value)}
+      />
       <br />
       <hr />
       <br />
