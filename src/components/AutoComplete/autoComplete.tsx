@@ -23,7 +23,7 @@ export interface AutoCompleteProps extends Omit<InputProps, "onSelect"> {
     keyword: string
   ) => DataSourceType[] | Promise<DataSourceType[]>;
   onSelect?: (item: DataSourceType) => void;
-  renderOption?: (item: DataSourceType) => ReactElement;
+  renderOption?: (item: DataSourceType) => string; // 暂不支持返回ReactElement
 }
 
 const AutoComplete: FC<AutoCompleteProps> = (props) => {
@@ -101,7 +101,8 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
     triggerSearch.current = true;
   };
   const handleSelect = (item: DataSourceType) => {
-    setInputValue(item.value);
+    // setInputValue(item.value);
+    setInputValue(renderOption ? renderOption(item) : item.value);
     setShowDropDown(false);
     triggerSearch.current = false;
     onSelect && onSelect(item);

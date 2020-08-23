@@ -1,0 +1,47 @@
+.fmr-select {
+  position: relative;
+  display: inline-block;
+  width: $select-default-width;
+  cursor: pointer;
+  .fmr-select-selector {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: $select-selector-width;
+    height: $select-selector-height;
+    border: $select-selector-border;
+    transition: $select-selector-transition;
+    .fmr-select-search {
+      flex: 1;
+      height: $select-search-height;
+      line-height: $select-search-line-height;
+      padding: $select-search-padding-y $select-search-padding-x;
+      font-size: $select-search-font-size;
+      color: $select-search-font-color;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .fmr-select-arrow {
+      margin: $select-arrow-margin-y $select-arrow-margin-x;
+      color: $select-arrow-color;
+    }
+  }
+  .fmr-select-list {
+    position: absolute;
+    top: $select-list-top;
+    left: $select-list-left;
+    width: 100%;
+    height: 120px;
+    background-color: $select-list-bg-color;
+    box-shadow: $select-list-box-shadow;
+    z-index: 1000;
+  }
+
+  &:hover,
+  &.is-focus {
+    .fmr-select-selector {
+      border-color: lighten($primary, 20%);
+    }
+  }
+}

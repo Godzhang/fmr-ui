@@ -335,5 +335,30 @@ $suggestion-item-padding-vertial: $btn-padding-x-sm !default;
 $suggestion-item-font-size: 1rem !default;
 $suggestion-item-line-height: $line-height-lg !default;
 $suggestion-item-color: $gray-700 !default;
-// $suggestion-item-highlight-color: $gray-800;
 $suggestion-item-highlight-background-color: $gray-200;
+
+// select
+$select-default-width: 200px !default;
+
+$select-selector-width: 100% !default;
+$select-selector-height: 32px !default;
+$select-selector-border-width: $border-width !default;
+$select-selector-border-color: $border-color !default;
+$select-selector-border: $border-width solid $border-color !default;
+$select-selector-transition: all 0.5s !default;
+
+$select-search-height: $select-selector-height !default;
+$select-search-line-height: $select-selector-height !default;
+$select-search-padding-x: 0.5rem !default;
+$select-search-padding-y: 0 !default;
+$select-search-font-size: $font-size-sm !default;
+$select-search-font-color: $body-color !default;
+
+$select-arrow-margin-y: 0 !default;
+$select-arrow-margin-x: 0.5rem !default;
+$select-arrow-color: $gray-500 !default;
+
+$select-list-top: $select-selector-height + 3px !default;
+$select-list-left: 0 !default;
+$select-list-bg-color: $white !default;
+$select-list-box-shadow: $box-shadow !default;

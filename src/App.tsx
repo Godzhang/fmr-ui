@@ -12,6 +12,8 @@ import Input from "./components/Input/input";
 import AutoComplete, {
   DataSourceType,
 } from "./components/AutoComplete/autoComplete";
+import Select from "./components/Select/select";
+import Option from "./components/Select/option";
 
 function App() {
   const [showTransition, setTransition] = useState(false);
@@ -45,15 +47,24 @@ function App() {
   };
   const renderOption = (item: DataSourceType) => {
     const itemWithNumber = item as DataSourceType<LakerProps>;
-    return (
-      <h3>
-        Name: {itemWithNumber.value} - {itemWithNumber.number}
-      </h3>
-    );
+    return `Name: ${itemWithNumber.value} - ${itemWithNumber.number}`;
   };
+
+  const selectOptions = ["maike", "cuifu", "fulankelin"];
 
   return (
     <div className="App" style={{ padding: "20px" }}>
+      <h1>Select</h1>
+      <Select defaultValue="maike" onChange={(v) => console.log(v)}>
+        {selectOptions.map((option) => (
+          <Option key={option} value={option}>
+            {option}
+          </Option>
+        ))}
+      </Select>
+      <br />
+      <hr />
+      <br />
       <h1>AutoComplete</h1>
       <AutoComplete
         fetchSuggestions={fetchSuggestions}
@@ -71,16 +82,8 @@ function App() {
       <br />
       <h1>Input</h1>
       <Input style={{ marginBottom: "10px" }} placeholder="请输入姓名" />
-      <Input
-        style={{ marginBottom: "10px" }}
-        placeholder="请输入姓名"
-        disabled
-      />
-      <Input
-        style={{ marginBottom: "10px" }}
-        placeholder="请输入姓名"
-        readOnly
-      />
+      <Input style={{ marginBottom: "10px" }} placeholder="disabled" disabled />
+      <Input style={{ marginBottom: "10px" }} placeholder="readonly" readOnly />
       <Input
         style={{ marginBottom: "10px" }}
         value="zhangqi"
