@@ -33,9 +33,22 @@
     left: $select-list-left;
     width: 100%;
     height: 120px;
+    padding: 0;
     background-color: $select-list-bg-color;
     box-shadow: $select-list-box-shadow;
     z-index: 1000;
+    .fmr-option {
+      height: 30px;
+      line-height: 30px;
+      padding: $select-option-padding-y $select-option-padding-x;
+      list-style: none;
+      font-size: $select-option-font-size;
+      color: $select-option-font-color;
+      cursor: pointer;
+      &:hover {
+        background-color: $select-option-hover-bg-color;
+      }
+    }
   }
 
   &:hover,

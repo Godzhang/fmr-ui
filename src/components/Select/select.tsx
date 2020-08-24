@@ -1,8 +1,16 @@
-import React, { FC, ChangeEvent, CSSProperties, useState, useRef } from "react";
+import React, {
+  FC,
+  Children,
+  ChangeEvent,
+  CSSProperties,
+  useState,
+  useRef,
+} from "react";
 import classnames from "classnames";
 import Icon from "../Icon/icon";
 import Transition from "../Transition/transition";
 import useClickOutside from "../../hooks/useClickOutside";
+import { OptionProps } from "./option";
 
 export interface SelectProps {
   defaultValue?: string;
@@ -13,7 +21,7 @@ export interface SelectProps {
 }
 
 const Select: FC<SelectProps> = (props) => {
-  const { defaultValue, value, style, className, onChange } = props;
+  const { defaultValue, value, style, className, children, onChange } = props;
   const [isFocus, setIsFocus] = useState(false);
   const [showSearchList, setShowSearchList] = useState(false);
   const componentRef = useRef<HTMLDivElement>(null);
@@ -32,11 +40,17 @@ const Select: FC<SelectProps> = (props) => {
     setShowSearchList(true);
   };
   const renderOptions = () => {
-    return (
-      <Transition in={showSearchList} timeout={300} animation="zoom-in-top">
-        <div className="fmr-select-list"></div>
-      </Transition>
-    );
+    return Children.map(children, (child) => {
+      const childElement = child as React.FunctionComponentElement<OptionProps>;
+      const { displayName } = childElement.type;
+      if (displayName === "Option") {
+        return React.cloneElement(childElement);
+      } else {
+        console.error(
+          "Warning: Select has a child which is not a Option component"
+        );
+      }
+    });
   };
 
   return (
@@ -52,7 +66,9 @@ const Select: FC<SelectProps> = (props) => {
         </div>
         <Icon className="fmr-select-arrow" icon="angle-down" />
       </div>
-      {renderOptions()}
+      <Transition in={showSearchList} timeout={300} animation="zoom-in-top">
+        <ul className="fmr-select-list">{renderOptions()}</ul>
+      </Transition>
     </div>
   );
 };
