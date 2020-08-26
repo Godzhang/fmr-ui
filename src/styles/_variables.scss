@@ -362,9 +362,12 @@ $select-list-top: $select-selector-height + 3px !default;
 $select-list-left: 0 !default;
 $select-list-bg-color: $white !default;
 $select-list-box-shadow: $box-shadow !default;
+$select-list-padding-x: 0 !default;
+$select-list-padding-y: 0.125rem !default;
 
 $select-option-padding-x: 0.5rem !default;
 $select-option-padding-y: 0 !default;
 $select-option-font-size: $font-size-base !default;
 $select-option-font-color: $body-color !default;
 $select-option-hover-bg-color: $gray-200 !default;
+$select-option-disabled-color: $gray-500 !default;

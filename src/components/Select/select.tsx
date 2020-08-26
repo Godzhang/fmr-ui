@@ -1,27 +1,41 @@
 import React, {
   FC,
   Children,
-  ChangeEvent,
   CSSProperties,
   useState,
   useRef,
+  createContext,
 } from "react";
 import classnames from "classnames";
 import Icon from "../Icon/icon";
 import Transition from "../Transition/transition";
 import useClickOutside from "../../hooks/useClickOutside";
+// import useDidMount from "../../hooks/useDidMount";
 import { OptionProps } from "./option";
 
+type SelectMode = "multiple" | "single";
 export interface SelectProps {
   defaultValue?: string;
   value?: string;
+  mode?: SelectMode;
   style?: CSSProperties;
   className?: string;
-  onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
+  onChange?: (value: string) => void;
+  onVisibleChange?: (isVisible: boolean) => void;
 }
 
+type OptionClickCallback = (value: string) => void;
+interface ISelectContext {
+  handleOptionClick: OptionClickCallback;
+  mode?: SelectMode;
+}
+
+export const SelectContext = createContext<ISelectContext>({
+  handleOptionClick: () => {},
+});
+
 const Select: FC<SelectProps> = (props) => {
-  const { defaultValue, value, style, className, children, onChange } = props;
+  const { style, className, mode, children, onChange, onVisibleChange } = props;
   const [isFocus, setIsFocus] = useState(false);
   const [showSearchList, setShowSearchList] = useState(false);
   const componentRef = useRef<HTMLDivElement>(null);
@@ -30,14 +44,44 @@ const Select: FC<SelectProps> = (props) => {
     "is-focus": isFocus,
   });
 
+  const fixControlledValue = (value: any) => {
+    if (typeof value === undefined || value === null) {
+      return "";
+    }
+    return value;
+  };
+  if ("value" in props) {
+    delete props.defaultValue;
+    props.value = fixControlledValue(props.value);
+  }
+  const [selectValue, setSelectValue] = useState(
+    props.defaultValue || props.value
+  );
+
   useClickOutside(componentRef, () => {
-    setIsFocus(false);
-    setShowSearchList(false);
+    if (showSearchList) {
+      setIsFocus(false);
+      setShowSearchList(false);
+      onVisibleChange && onVisibleChange(false);
+    }
   });
 
+  const handleOptionClick = (value: string) => {
+    setSelectValue(value);
+    setShowSearchList(false);
+    onChange && onChange(value);
+  };
+
+  const passedContext: ISelectContext = {
+    handleOptionClick,
+    mode,
+  };
+
   const handleSelectMouseDown = () => {
-    setIsFocus(true);
-    setShowSearchList(true);
+    const isShowSearchList = !showSearchList;
+    setIsFocus(isShowSearchList);
+    setShowSearchList(isShowSearchList);
+    onVisibleChange && onVisibleChange(isShowSearchList);
   };
   const renderOptions = () => {
     return Children.map(children, (child) => {
@@ -61,16 +105,20 @@ const Select: FC<SelectProps> = (props) => {
       onMouseDown={handleSelectMouseDown}
     >
       <div className="fmr-select-selector">
-        <div className="fmr-select-search">
-          {/* 曼联打平南安普顿曼联打平南安普顿 */}
-        </div>
+        <div className="fmr-select-search">{selectValue}</div>
         <Icon className="fmr-select-arrow" icon="angle-down" />
       </div>
-      <Transition in={showSearchList} timeout={300} animation="zoom-in-top">
-        <ul className="fmr-select-list">{renderOptions()}</ul>
-      </Transition>
+      <SelectContext.Provider value={passedContext}>
+        <Transition in={showSearchList} timeout={300} animation="zoom-in-top">
+          <ul className="fmr-select-list">{renderOptions()}</ul>
+        </Transition>
+      </SelectContext.Provider>
     </div>
   );
+};
+
+Select.defaultProps = {
+  mode: "single",
 };
 
 export default Select;

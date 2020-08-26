@@ -21,6 +21,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      user-select: none;
     }
     .fmr-select-arrow {
       margin: $select-arrow-margin-y $select-arrow-margin-x;
@@ -32,8 +33,8 @@
     top: $select-list-top;
     left: $select-list-left;
     width: 100%;
-    height: 120px;
-    padding: 0;
+    padding: $select-list-padding-y $select-list-padding-x;
+    margin: 0;
     background-color: $select-list-bg-color;
     box-shadow: $select-list-box-shadow;
     z-index: 1000;
@@ -47,6 +48,11 @@
       cursor: pointer;
       &:hover {
         background-color: $select-option-hover-bg-color;
+      }
+      &.is-disabled {
+        color: $select-option-disabled-color;
+        background-color: transparent;
+        cursor: not-allowed;
       }
     }
   }

@@ -55,9 +55,13 @@ function App() {
   return (
     <div className="App" style={{ padding: "20px" }}>
       <h1>Select</h1>
-      <Select defaultValue="maike" onChange={(v) => console.log(v)}>
-        {selectOptions.map((option) => (
-          <Option key={option} value={option}>
+      <Select
+        defaultValue="maike"
+        onChange={(v) => console.log(v)}
+        onVisibleChange={(v) => console.log(v)}
+      >
+        {selectOptions.map((option, oi) => (
+          <Option key={option} value={option} disabled={oi === 1}>
             {option}
           </Option>
         ))}
