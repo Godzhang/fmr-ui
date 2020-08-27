@@ -15,13 +15,14 @@ const Option: FC<OptionProps> = (props) => {
     "is-disabled": disabled,
   });
 
-  const handleClick = (value: string) => {
+  const handleClick = () => {
+    console.log(value);
     if (disabled) return;
     context.handleOptionClick(value);
   };
 
   return (
-    <li className={classes} onClick={() => handleClick(value)}>
+    <li className={classes} onClick={handleClick}>
       {props.children}
     </li>
   );
