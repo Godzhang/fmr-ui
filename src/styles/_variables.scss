@@ -371,3 +371,16 @@ $select-option-font-size: $font-size-base !default;
 $select-option-font-color: $body-color !default;
 $select-option-hover-bg-color: $gray-200 !default;
 $select-option-disabled-color: $gray-500 !default;
+$select-option-selected-bg-color: mix($primary, $white, 20%) !default;
+$select-option-selected-font-weight: 600 !default;
+
+// tag
+$tag-padding-y: 0.125rem !default;
+$tag-padding-x: 0.5rem !default;
+$tag-border-width: $border-width !default;
+$tag-border-style: solid !default;
+$tag-border-color: $border-color !default;
+$tag-border: $tag-border-width $tag-border-style $tag-border-color !default;
+$tag-font-size: $font-size-sm !default;
+$tag-font-color: $body-color !default;
+$tag-background-color: $white !default;

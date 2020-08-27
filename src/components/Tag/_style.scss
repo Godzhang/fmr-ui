@@ -1,0 +1,42 @@
+.fmr-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: $tag-padding-y $tag-padding-x;
+  border: $tag-border;
+  font-size: $tag-font-size;
+  .fmr-tag-close-icon {
+    margin-left: 5px;
+    cursor: pointer;
+  }
+}
+.fmr-tag-default {
+  @include tag-style($tag-background-color, $tag-font-color, $tag-border-color);
+}
+.fmr-tag-primary {
+  @include tag-style(
+    mix($primary, $white, 10%),
+    $primary,
+    mix($primary, $white, 60%)
+  );
+}
+.fmr-tag-success {
+  @include tag-style(
+    mix($success, $white, 10%),
+    $success,
+    mix($success, $white, 60%)
+  );
+}
+.fmr-tag-warning {
+  @include tag-style(
+    mix($warning, $white, 10%),
+    $warning,
+    mix($warning, $white, 60%)
+  );
+}
+.fmr-tag-danger {
+  @include tag-style(
+    mix($danger, $white, 10%),
+    $danger,
+    mix($danger, $white, 60%)
+  );
+}

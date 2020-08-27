@@ -8,10 +8,16 @@ import React, {
 } from "react";
 import classnames from "classnames";
 import Icon from "../Icon/icon";
+import Tag from "../Tag/tag";
 import Transition from "../Transition/transition";
 import useClickOutside from "../../hooks/useClickOutside";
-// import useDidMount from "../../hooks/useDidMount";
 import { OptionProps } from "./option";
+
+/**
+ * 待完成功能：
+ * 1. 对于已选中的项，在下拉列表中要有已选中样式 is-selected
+ * 2. 支持多选
+ */
 
 type SelectMode = "multiple" | "single";
 export interface SelectProps {
@@ -83,12 +89,16 @@ const Select: FC<SelectProps> = (props) => {
     setShowSearchList(isShowSearchList);
     onVisibleChange && onVisibleChange(isShowSearchList);
   };
+
   const renderOptions = () => {
     return Children.map(children, (child) => {
       const childElement = child as React.FunctionComponentElement<OptionProps>;
       const { displayName } = childElement.type;
       if (displayName === "Option") {
-        return React.cloneElement(childElement);
+        return React.cloneElement(childElement, {
+          className:
+            selectValue === childElement.props.value ? "is-selected" : "",
+        });
       } else {
         console.error(
           "Warning: Select has a child which is not a Option component"

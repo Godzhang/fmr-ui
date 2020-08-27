@@ -80,3 +80,10 @@
   border-top-left-radius: $raduis;
   border-bottom-left-radius: $raduis;
 }
+
+// tag
+@mixin tag-style($background, $color, $border) {
+  border-color: $border;
+  background-color: $background;
+  color: $color;
+}

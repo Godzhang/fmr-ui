@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import Button, { ButtonType, ButtonSize } from "./components/Button/button";
 import Alert from "./components/Alert/alert";
 import Icon from "./components/Icon/icon";
@@ -14,6 +14,8 @@ import AutoComplete, {
 } from "./components/AutoComplete/autoComplete";
 import Select from "./components/Select/select";
 import Option from "./components/Select/option";
+import Tag from "./components/Tag/tag";
+import useCancelTimer from "./hooks/useCancelTimer";
 
 function App() {
   const [showTransition, setTransition] = useState(false);
@@ -66,6 +68,29 @@ function App() {
           </Option>
         ))}
       </Select>
+      <br />
+      <hr />
+      <br />
+      <h1>Tag</h1>
+      <Tag>default tag</Tag>
+      <Tag style={{ marginLeft: "10px" }} closable={true}>
+        default tag
+      </Tag>
+      <br />
+      <br />
+      <Tag>default tag</Tag>
+      <Tag style={{ marginLeft: "10px" }} type="primary">
+        primary tag
+      </Tag>
+      <Tag style={{ marginLeft: "10px" }} type="success" closable={true}>
+        success tag
+      </Tag>
+      <Tag style={{ marginLeft: "10px" }} type="warning">
+        warning tag
+      </Tag>
+      <Tag style={{ marginLeft: "10px" }} type="danger">
+        danger tag
+      </Tag>
       <br />
       <hr />
       <br />
