@@ -5,6 +5,7 @@ import React, {
   useState,
   useRef,
   createContext,
+  MouseEvent,
 } from "react";
 import classnames from "classnames";
 import Icon from "../Icon/icon";
@@ -107,6 +108,11 @@ const Select: FC<SelectProps> = (props) => {
     });
   };
 
+  const handleClickOption = (e: MouseEvent<HTMLUListElement>) => {
+    const target = e.target;
+    console.log(target);
+  };
+
   return (
     <div
       ref={componentRef}
@@ -120,7 +126,9 @@ const Select: FC<SelectProps> = (props) => {
       </div>
       <SelectContext.Provider value={passedContext}>
         <Transition in={showSearchList} timeout={300} animation="zoom-in-top">
-          <ul className="fmr-select-list">{renderOptions()}</ul>
+          <ul className="fmr-select-list" onClick={(e) => handleClickOption(e)}>
+            {renderOptions()}
+          </ul>
         </Transition>
       </SelectContext.Provider>
     </div>
