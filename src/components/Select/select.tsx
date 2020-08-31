@@ -5,7 +5,7 @@ import React, {
   useState,
   useRef,
   createContext,
-  MouseEvent,
+  FunctionComponentElement,
 } from "react";
 import classnames from "classnames";
 import Icon from "../Icon/icon";
@@ -16,22 +16,21 @@ import { OptionProps } from "./option";
 
 /**
  * 待完成功能：
- * 1. 对于已选中的项，在下拉列表中要有已选中样式 is-selected
- * 2. 支持多选
+ * 1. 支持多选
  */
 
 type SelectMode = "multiple" | "single";
 export interface SelectProps {
-  defaultValue?: string;
-  value?: string;
+  defaultValue?: string | string[] | number | number[];
+  value?: string | string[] | number | number[];
   mode?: SelectMode;
   style?: CSSProperties;
   className?: string;
-  onChange?: (value: string) => void;
+  onChange?: (value: string | number) => void;
   onVisibleChange?: (isVisible: boolean) => void;
 }
 
-type OptionClickCallback = (value: string) => void;
+type OptionClickCallback = (value: string | number) => void;
 interface ISelectContext {
   handleOptionClick: OptionClickCallback;
   mode?: SelectMode;
@@ -48,6 +47,7 @@ const Select: FC<SelectProps> = (props) => {
   const componentRef = useRef<HTMLDivElement>(null);
 
   const classes = classnames("fmr-select", className, {
+    "fmr-select-multiple": mode === "multiple",
     "is-focus": isFocus,
   });
 
@@ -73,7 +73,7 @@ const Select: FC<SelectProps> = (props) => {
     }
   });
 
-  const handleOptionClick = (value: string) => {
+  const handleOptionClick = (value: string | number) => {
     setSelectValue(value);
     setShowSearchList(false);
     onChange && onChange(value);
@@ -91,14 +91,37 @@ const Select: FC<SelectProps> = (props) => {
     onVisibleChange && onVisibleChange(isShowSearchList);
   };
 
+  const renderSelectValue = () => {
+    if (mode === "single") return selectValue;
+    const sv = Array.isArray(selectValue) ? selectValue : [selectValue];
+    return sv.map((value) => {
+      return (
+        <Tag key={value} closable={true} type="primary">
+          {value}
+        </Tag>
+      );
+    });
+  };
+
+  // 待改进...
+  const handleIsSelected = (value: string | number) => {
+    if (mode === "single") {
+      return selectValue === value;
+    } else if (Array.isArray(selectValue) && selectValue.length > 0) {
+      return (selectValue as typeof value[]).includes(value);
+    } else {
+      return false;
+    }
+  };
+
   const renderOptions = () => {
     return Children.map(children, (child) => {
-      const childElement = child as React.FunctionComponentElement<OptionProps>;
+      const childElement = child as FunctionComponentElement<OptionProps>;
       const { displayName } = childElement.type;
       if (displayName === "Option") {
+        const isSelect = handleIsSelected(childElement.props.value);
         return React.cloneElement(childElement, {
-          className:
-            selectValue === childElement.props.value ? "is-selected" : "",
+          className: isSelect ? "is-selected" : "",
         });
       } else {
         console.error(
@@ -106,11 +129,6 @@ const Select: FC<SelectProps> = (props) => {
         );
       }
     });
-  };
-
-  const handleClickOption = (e: MouseEvent<HTMLUListElement>) => {
-    const target = e.target;
-    console.log(target);
   };
 
   return (
@@ -121,14 +139,14 @@ const Select: FC<SelectProps> = (props) => {
       onMouseDown={handleSelectMouseDown}
     >
       <div className="fmr-select-selector">
-        <div className="fmr-select-search">{selectValue}</div>
-        <Icon className="fmr-select-arrow" icon="angle-down" />
+        <div className="fmr-select-search">{renderSelectValue()}</div>
+        {mode === "single" && (
+          <Icon className="fmr-select-arrow" icon="angle-down" />
+        )}
       </div>
       <SelectContext.Provider value={passedContext}>
         <Transition in={showSearchList} timeout={300} animation="zoom-in-top">
-          <ul className="fmr-select-list" onClick={(e) => handleClickOption(e)}>
-            {renderOptions()}
-          </ul>
+          <ul className="fmr-select-list">{renderOptions()}</ul>
         </Transition>
       </SelectContext.Provider>
     </div>

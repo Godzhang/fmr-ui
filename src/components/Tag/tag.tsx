@@ -1,8 +1,20 @@
-import React, { FC, Children, CSSProperties, useState } from "react";
+import React, {
+  FC,
+  Children,
+  CSSProperties,
+  useState,
+  MouseEvent,
+} from "react";
 import classnames from "classnames";
 import Icon from "../Icon/icon";
 
-type TagType = "default" | "primary" | "success" | "warning" | "danger";
+type TagType =
+  | "default"
+  | "primary"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info";
 export interface TagProps {
   type?: TagType;
   className?: string;
@@ -17,6 +29,11 @@ const Tag: FC<TagProps> = (props) => {
     [`fmr-tag-${type}`]: type,
   });
 
+  const handleClick = (e: MouseEvent<SVGSVGElement>) => {
+    e.stopPropagation();
+    setIsRender(false);
+  };
+
   return isRender ? (
     <span className={classes} style={style} {...restProps}>
       {children}
@@ -24,7 +41,7 @@ const Tag: FC<TagProps> = (props) => {
         <Icon
           className="fmr-tag-close-icon"
           icon="window-close"
-          onClick={() => setIsRender(false)}
+          onClick={(e) => handleClick(e)}
         />
       ) : null}
     </span>

@@ -39,8 +39,6 @@
     box-shadow: $select-list-box-shadow;
     z-index: 1000;
     .fmr-option {
-      height: 30px;
-      line-height: 30px;
       padding: $select-option-padding-y $select-option-padding-x;
       list-style: none;
       font-size: $select-option-font-size;
@@ -57,6 +55,7 @@
       &.is-selected {
         background-color: $select-option-selected-bg-color;
         font-weight: $select-option-selected-font-weight;
+        color: $select-option-selected-color;
       }
     }
   }
@@ -66,5 +65,11 @@
     .fmr-select-selector {
       border-color: lighten($primary, 20%);
     }
+  }
+}
+.fmr-select-multiple {
+  width: 100%;
+  .fmr-tag {
+    margin-right: 5px;
   }
 }

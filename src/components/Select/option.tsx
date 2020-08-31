@@ -1,15 +1,15 @@
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, MouseEvent } from "react";
 import classnames from "classnames";
 import { SelectContext } from "./select";
 
 export interface OptionProps {
-  value: string;
+  value: string | number;
   className?: string;
   disabled?: boolean;
 }
 
 const Option: FC<OptionProps> = (props) => {
-  const context = useContext(SelectContext);
+  const { handleOptionClick, mode } = useContext(SelectContext);
   const { value, className, disabled } = props;
   const classes = classnames("fmr-option", className, {
     "is-disabled": disabled,
@@ -17,11 +17,15 @@ const Option: FC<OptionProps> = (props) => {
 
   const handleClick = () => {
     if (disabled) return;
-    context.handleOptionClick(value);
+    handleOptionClick(value);
   };
 
   return (
-    <li className={classes} onClick={() => handleClick()}>
+    <li
+      className={classes}
+      onMouseDown={(e) => e.stopPropagation()}
+      onClick={() => handleClick()}
+    >
       {props.children}
     </li>
   );

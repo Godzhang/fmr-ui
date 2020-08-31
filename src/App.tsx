@@ -53,10 +53,38 @@ function App() {
   };
 
   const selectOptions = ["maike", "cuifu", "fulankelin"];
+  const selectMultipleOptions = [
+    "a1",
+    "b2",
+    "c3",
+    "d4",
+    "e5",
+    "f6",
+    "g7",
+    "h8",
+    "i9",
+    "j10",
+  ];
 
   return (
     <div className="App" style={{ padding: "20px" }}>
+      <br />
+      <hr />
+      <br />
       <h1>Select</h1>
+      <h3>多选</h3>
+      <Select
+        mode="multiple"
+        defaultValue={["a1", "c3"]}
+        onChange={(v) => console.log(v)}
+      >
+        {selectMultipleOptions.map((option, oi) => (
+          <Option key={option} value={option}>
+            {option}
+          </Option>
+        ))}
+      </Select>
+      <h3>单选</h3>
       <Select
         defaultValue="maike"
         onChange={(v) => console.log(v)}
@@ -90,6 +118,9 @@ function App() {
       </Tag>
       <Tag style={{ marginLeft: "10px" }} type="danger">
         danger tag
+      </Tag>
+      <Tag style={{ marginLeft: "10px" }} type="info">
+        info tag
       </Tag>
       <br />
       <hr />
